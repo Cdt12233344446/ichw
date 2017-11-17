@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: <utf-8> -*-
 
 """planets.py: A not-to-scale simulation of the Solar System.
                Only first six planets are included.
@@ -23,6 +24,13 @@ Earth = turtle.Turtle()
 Mars = turtle.Turtle()
 Jupiter = turtle.Turtle()
 Saturn = turtle.Turtle()
+Sun.shape("circle")
+Sun.shapesize(0.67, 0.67, 0)
+Sun.color("yellow", "yellow")
+
+"""the keys 'bpa' and 'cpa' are created to simplify the expressions in main().
+   their values will be evaluated below.
+"""
 planets_fact = {
     'Mer': {
         'nam': Mercury,
@@ -92,10 +100,6 @@ planets_fact = {
 
     }
 
-Sun.shape("circle")
-Sun.shapesize(0.67, 0.67, 0)
-Sun.color("yellow", "yellow")
-
 """set planets to their initial place
 """
 for pls, pls_fct in planets_fact.items():
@@ -113,7 +117,7 @@ for pls, pls_fct in planets_fact.items():
 def main():
     """main module which motivates the planets
     """
-    for t in range(1500):
+    for t in range(2000):
         for pls, pr in planets_fact.items():
             pr['nam'].goto(
                 4 * (pr['dis'] * math.cos(6.283 * t / pr['per']) - pr['cpa']),
