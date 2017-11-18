@@ -9,10 +9,10 @@ __pkuid__  = "1700011774"
 __email__  = "1700011774@pku.edu.cn"
 """
 
-import math
+import math as m
 import turtle
 
-"""set basic parameters
+"""define objects
 """
 turtle.setup(width=1.0, height=1.0, startx=None, starty=None)
 turtle.screensize(canvwidth=1500, canvheight=1500, bg="black")
@@ -25,103 +25,103 @@ Mars = turtle.Turtle()
 Jupiter = turtle.Turtle()
 Saturn = turtle.Turtle()
 Sun.shape("circle")
-Sun.shapesize(0.67, 0.67, 0)
+Sun.shapesize(1.09, 1.09, 0)
 Sun.color("yellow", "yellow")
 
-"""the keys 'bpa' and 'cpa' are created to simplify the expressions in main().
-   their values will be evaluated below.
+"""the keys 'b' and 'c' are geometric factors created
+   to simplify the expressions in main() and will be evaluated below
 """
-planets_fact = {
-    'Mer': {
-        'nam': Mercury,
-        'dis': 5.79,
-        'rad': 7.80,
-        'per': 49.0,
-        'ecc': 0.45,
+planets_and_parameters = [
+    {
+        'i': Mercury,
+        'rad': 1.53,
+        'per': 24.1,
         'col': "purple",
-        'bpa': 0,
-        'cpa': 0,
-        },
+        'a': 5.79,
+        'e': 0.206,
+        'b': 0,
+        'c': 0,
+    },
 
-    'Ven': {
-        'nam': Venus,
-        'dis': 10.82,
-        'rad': 8.71,
-        'per': 78.4,
-        'ecc': 0.08,
+    {
+        'i': Venus,
+        'rad': 3.80,
+        'per': 61.5,
         'col': "orange",
-        'bpa': 0,
-        'cpa': 0,
-        },
+        'a': 10.82,
+        'e': 0.007,
+        'b': 0,
+        'c': 0,
+    },
 
-    'Ear': {
-        'nam': Earth,
-        'dis': 14.96,
-        'rad': 8.76,
+    {
+        'i': Earth,
+        'rad': 4.00,
         'per': 100.0,
-        'ecc': 0.13,
         'col': "blue",
-        'bpa': 0,
-        'cpa': 0,
-        },
+        'a': 14.96,
+        'e': 0.016,
+        'b': 0,
+        'c': 0,
+    },
 
-    'Mars': {
-        'nam': Mars,
-        'dis': 22.79,
-        'rad': 8.13,
-        'per': 137.1,
-        'ecc': 0.31,
+    {
+        'i': Mars,
+        'rad': 2.13,
+        'per': 188.0,
         'col': "red",
-        'bpa': 0,
-        'cpa': 0,
-        },
+        'a': 22.79,
+        'e': 0.093,
+        'b': 0,
+        'c': 0,
+    },
 
-    'Jup': {
-        'nam': Jupiter,
-        'dis': 77.84,
-        'rad': 11.18,
-        'per': 344.4,
-        'ecc': 0.22,
+    {
+        'i': Jupiter,
+        'rad': 11.2,
+        'per': 1186,
         'col': "green",
-        'bpa': 0,
-        'cpa': 0,
-        },
+        'a': 77.84,
+        'e': 0.048,
+        'b': 0,
+        'c': 0,
+    },
 
-    'Sat': {
-        'nam': Saturn,
-        'dis': 142.67,
-        'rad': 11.00,
-        'per': 542.6,
-        'ecc': 0.23,
+    {
+        'i': Saturn,
+        'rad': 9.45,
+        'per': 2945,
         'col': "brown",
-        'bpa': 0,
-        'cpa': 0,
-        },
+        'a': 142.67,
+        'e': 0.054,
+        'b': 0,
+        'c': 0,
+    },
 
-    }
+    ]
 
-"""set planets to their initial place
+"""send planets to their initial position
 """
-for pls, pls_fct in planets_fact.items():
-    pls_fct['nam'].shape("circle")
-    pls_fct['nam'].shapesize(pls_fct['rad'] / 20, pls_fct['rad'] / 20, 0)
-    pls_fct['nam'].pen(speed=0)
-    pls_fct['nam'].color(pls_fct['col'], pls_fct['col'])
-    pls_fct['bpa'] = pls_fct['dis'] * math.sqrt(1 - pls_fct['ecc'] ** 2)
-    pls_fct['cpa'] = pls_fct['dis'] * pls_fct['ecc']
-    pls_fct['nam'].up()
-    pls_fct['nam'].goto(pls_fct['dis'] * (1 - pls_fct['ecc']) * 4, 0)
-    pls_fct['nam'].down()
+for pls in planets_and_parameters:
+    pls['i'].shape("circle")
+    pls['i'].shapesize(pls['rad'] / 20, pls['rad'] / 20, 0)
+    pls['i'].pen(speed=0)
+    pls['i'].color(pls['col'], pls['col'])
+    pls['b'] = pls['a'] * m.sqrt(1 - pls['e'] ** 2)
+    pls['c'] = pls['a'] * pls['e']
+    pls['i'].up()
+    pls['i'].goto(pls['a'] * (1 - pls['e']) * 4, 0)
+    pls['i'].down()
 
 
 def main():
     """main module which motivates the planets
     """
     for t in range(2000):
-        for pls, pr in planets_fact.items():
-            pr['nam'].goto(
-                4 * (pr['dis'] * math.cos(6.283 * t / pr['per']) - pr['cpa']),
-                4 * pr['bpa'] * math.sin(6.283 * t / pr['per']))
+        for pls in planets_and_parameters:
+            pls['i'].goto(
+                4 * (pls['a'] * m.cos(2 * m.pi * t / pls['per']) - pls['c']),
+                4 * pls['b'] * m.sin(2 * m.pi * t / pls['per']))
 
 
 if __name__ == '__main__':
