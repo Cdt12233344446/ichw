@@ -109,17 +109,21 @@ for pls in planets_and_parameters:
 def main():
     """keeps the planets going
     """
-    for t in range(3000):
+    try:
+        for t in range(1, 200):
+            for pl in planets_and_parameters:
+                pl['i'].goto(
+                    4 * (pl['a'] * m.cos(2 * m.pi * t / pl['per']) - pl['c']),
+                    4 * pl['b'] * m.sin(2 * m.pi * t / pl['per']))
+
         # avoids redundant rendering by 'upping' the faster planets
-        if t == 200:
-            for pls in planets_and_parameters[:4]:
+        if t == 100:
+            for pls in planets_and_parameters[:3]:
                 pls['i'].up()
-
-        for pls in planets_and_parameters:
-            pls['i'].goto(
-                4 * (pls['a'] * m.cos(2 * m.pi * t / pls['per']) - pls['c']),
-                4 * pls['b'] * m.sin(2 * m.pi * t / pls['per']))
-
+    except:
+        pass
+    finally:
+        print("Thanks for watching this simulaton. See you next time!")
 
 if __name__ == '__main__':
     main()
