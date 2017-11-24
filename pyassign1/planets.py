@@ -11,6 +11,7 @@ __email__  = "1700011774@pku.edu.cn"
 
 import math as m
 import turtle
+import random
 
 # defines objects
 turtle.setup(width=1.0, height=1.0, startx=None, starty=None)
