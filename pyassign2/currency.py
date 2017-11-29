@@ -2,6 +2,9 @@
 # -*- coding: <utf-8> -*-
 
 """currency.py: A simple yet functional currency exchange calculator.
+                In addition to requirements of the assignment, I added:
+                1. detailed docstrings and comments
+                2. a timer that records running time
 
 __author__ = "Cai Danyang"
 __pkuid__  = "1700011774"
@@ -9,6 +12,7 @@ __email__  = "1700011774@pku.edu.cn"
 """
 
 from urllib.request import urlopen
+from time import clock
 
 
 def jstr_fetch(fro, to, amu):
@@ -63,12 +67,14 @@ def hasError():
     """Intended for handling exceptional json strings.
 
     However, as specified in the Precondition,
-    there's no need to handle errors. Therefore we leave it empty.
+    there's no need to handle errors. Therefore, we leave it empty.
+
+    Warning: in real development, this test should be carefully written.
     """
     return False
 
 
-# The next three tests are rather formal; they always pass.
+# The next three tests are rather formal; they should always pass.
 def testError():
     """test if errors are handled properly
     """
@@ -86,16 +92,17 @@ def testfetch():
 def testprocess():
     """Intended to test if rawstr is properly processed.
 
-    However, since jstr_process() is immediately followed by exchange()
-    and thus cannot be isolated, testing jstr_process() is equivalent to
-    testing exchange(). So we leave it empty again.
+    However, since jstr_process() is immediately called by exchange(),
+    by testing the latter we CAN test the former. So we leave it empty, again.
+
+    Warning: in real development, this test should be carefully written.
     """
     pass
 
 
 # these are the 'real' tests
 def test_A():
-    """one of a series of tests, with this one concerning exchange from USD
+    """this test concerns exchange from USD
     """
     assert(1 == exchange('USD', 'USD', 1))              # initial test
     assert(2.0952375 == exchange('USD', 'EUR', 2.5))    # sample test
@@ -103,7 +110,7 @@ def test_A():
 
 
 def test_B():
-    """one of a series of tests, with this one concerning exchange to USD
+    """this test concerns exchange to USD
     """
     assert(2.9829553928851 == exchange('EUR', 'USD', 2.5))
     assert(0.38307424745064 == exchange('CNY', 'USD', 2.5))
@@ -111,8 +118,7 @@ def test_B():
 
 
 def test_C():
-    """one of a series of tests, with this one concerning exchange
-    to and from lesser-known currencies
+    """this test concerns exchange to and from lesser-known currencies
     """
     assert(4.8955068493151 == exchange('ZMW', 'MXN', 2.5))
     assert(1.9231929528177 == exchange('THB', 'CUP', 2.5))
@@ -121,14 +127,21 @@ def test_C():
 
 def testAll():
     """test all cases"""
+    print("Starting basic tests...")
     testError()
     testfetch()
     testprocess()
+    print("Basic tests passed.(Time elapsed since execution: "
+          + "%.3f" % clock() + " s)" + "\n\nStarting advanced tests...")
     test_A()
     test_B()
     test_C()
-    print("All tests passed")
+    print("Advanced tests passed.(Time elapsed since execution: "
+          + "%.3f" % clock() + " s)\n")
+    print("All tests passed. Total time elapsed: "
+          + "%.3f" % clock() + " s.")
 
 
 if __name__ == '__main__':
-    testAll()
+    clock()    # start the timer
+    testAll()  # start testing only if directly run
