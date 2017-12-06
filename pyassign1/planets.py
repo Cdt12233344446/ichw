@@ -13,105 +13,120 @@ import math as m
 import turtle
 import random as ran
 
-# defines objects
-turtle.setup(width=1.0, height=1.0, startx=None, starty=None)
-turtle.screensize(canvwidth=1500, canvheight=1500, bg="black")
-turtle.bgpic("Orrery.gif")
-turtle.title("planets.py")
-Sun = turtle.Turtle()
-Mercury = turtle.Turtle()
-Venus = turtle.Turtle()
-Earth = turtle.Turtle()
-Mars = turtle.Turtle()
-Jupiter = turtle.Turtle()
-Saturn = turtle.Turtle()
-Sun.shape("circle")
-Sun.shapesize(1.09, 1.09, 0)
-Sun.color("yellow", "yellow")
 
-"""
-A list of parameters needed for the following codes. Here
-'i' is the index or 'self' parameter,
-'rad' determines the size of the planet,
-'col' is the designated color,
-'φ' is the 'phase' that will be randomized later,
-'a' is the semimajor axis,
-'e' defines the eccentricity of the orbit,
-'b' and 'c' are auxillary and will be assigned values immediately after.
-"""
-planets_and_parameters = [
-    {'i': Mercury,
-     'rad': 1.53,
-     'per': 24.1,
-     'col': "purple",
-     'φ': 0,
-     'a': 5.79,
-     'e': 0.206,
-     'b': 0,
-     'c': 0,
-     },
-
-    {'i': Venus,
-     'rad': 3.80,
-     'per': 61.5,
-     'col': "orange",
-     'φ': 0,
-     'a': 10.82,
-     'e': 0.007,
-     'b': 0,
-     'c': 0,
-     },
-
-    {'i': Earth,
-     'rad': 4.00,
-     'per': 100.0,
-     'col': "blue",
-     'φ': 0,
-     'a': 14.96,
-     'e': 0.016,
-     'b': 0,
-     'c': 0,
-     },
-
-    {'i': Mars,
-     'rad': 2.13,
-     'per': 188.0,
-     'col': "red",
-     'φ': 0,
-     'a': 22.79,
-     'e': 0.093,
-     'b': 0,
-     'c': 0,
-     },
-
-    {'i': Jupiter,
-     'rad': 11.2,
-     'per': 1186,
-     'col': "green",
-     'φ': 0,
-     'a': 77.84,
-     'e': 0.048,
-     'b': 0,
-     'c': 0,
-     },
-
-    {'i': Saturn,
-     'rad': 9.45,
-     'per': 2945,
-     'col': "brown",
-     'φ': 0,
-     'a': 142.67,
-     'e': 0.054,
-     'b': 0,
-     'c': 0,
-     },
-
-    ]
+def obj_init():
+    """defines objects
+    """
+    turtle.setup(width=1.0, height=1.0, startx=None, starty=None)
+    turtle.screensize(canvwidth=1500, canvheight=1500, bg="black")
+    turtle.bgpic("Orrery.gif")
+    turtle.title("planets.py")
+    Sun = turtle.Turtle()
+    Mercury = turtle.Turtle()
+    Venus = turtle.Turtle()
+    Earth = turtle.Turtle()
+    Mars = turtle.Turtle()
+    Jupiter = turtle.Turtle()
+    Saturn = turtle.Turtle()
+    Sun.shape("circle")
+    Sun.shapesize(1.09, 1.09, 0)
+    Sun.color("yellow", "yellow")
+    return (Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn)
 
 
-def init():
+def para_init(Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn):
+    Sun = Sun
+    Mercury = Mercury
+    Venus = Venus
+    Earth = Earth
+    Mars = Mars
+    Jupiter = Jupiter
+    Saturn = Saturn
+    """
+    A list of parameters needed for the following codes. Here
+    'i' is the index or 'self' parameter,
+    'rad' determines the size of the planet,
+    'col' is the designated color,
+    'φ' is the 'phase' that will be randomized later,
+    'a' is the semimajor axis,
+    'e' defines the eccentricity of the orbit,
+    'b' and 'c' are auxillary and will be assigned values immediately after.
+    """
+    planets_and_parameters = [
+        {'i': Mercury,
+         'rad': 1.53,
+         'per': 24.1,
+         'col': "purple",
+         'φ': 0,
+         'a': 5.79,
+         'e': 0.206,
+         'b': 0,
+         'c': 0,
+         },
+
+        {'i': Venus,
+         'rad': 3.80,
+         'per': 61.5,
+         'col': "orange",
+         'φ': 0,
+         'a': 10.82,
+         'e': 0.007,
+         'b': 0,
+         'c': 0,
+         },
+
+        {'i': Earth,
+         'rad': 4.00,
+         'per': 100.0,
+         'col': "blue",
+         'φ': 0,
+         'a': 14.96,
+         'e': 0.016,
+         'b': 0,
+         'c': 0,
+         },
+
+        {'i': Mars,
+         'rad': 2.13,
+         'per': 188.0,
+         'col': "red",
+         'φ': 0,
+         'a': 22.79,
+         'e': 0.093,
+         'b': 0,
+         'c': 0,
+         },
+
+        {'i': Jupiter,
+         'rad': 11.2,
+         'per': 1186,
+         'col': "green",
+         'φ': 0,
+         'a': 77.84,
+         'e': 0.048,
+         'b': 0,
+         'c': 0,
+         },
+
+        {'i': Saturn,
+         'rad': 9.45,
+         'per': 2945,
+         'col': "brown",
+         'φ': 0,
+         'a': 142.67,
+         'e': 0.054,
+         'b': 0,
+         'c': 0,
+         },
+
+        ]
+    return planets_and_parameters
+
+
+def position_init(planets_and_parameters):
     """sends planets to their initial position
     """
+    planets_and_parameters = planets_and_parameters
     for pls in planets_and_parameters:
         pls['i'].shape("circle")
         pls['i'].shapesize(pls['rad'] / 20, pls['rad'] / 20, 0)
@@ -127,10 +142,18 @@ def init():
         pls['i'].down()
 
 
-def main():
-    """keeps the planets going
-    """
+def init():
+    print("Welcome to my Solar System Simulation!")
+    Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn = obj_init()
+    planets_and_parameters = para_init(Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn)
+    position_init(planets_and_parameters)
+    return (planets_and_parameters)
+
+
+def main(planets_and_parameters):
+    planets_and_parameters = planets_and_parameters
     try:
+        # keep the planets going
         for t in range(1, 2000):
             for pl in planets_and_parameters:
                 # use φ to simplify the expression, again
@@ -143,6 +166,7 @@ def main():
                 if t == 100:
                     for pls in planets_and_parameters[:3]:
                         pls['i'].up()
+        # error handling
     except:
         print("Pity that you quit so early. See you next time!")
     else:
@@ -150,5 +174,5 @@ def main():
 
 
 if __name__ == '__main__':
-    init()
-    main()
+    planets_and_parameters = init()
+    main(planets_and_parameters)
