@@ -15,14 +15,14 @@ from urllib.request import urlopen
 from time import clock
 
 
-def jstr_fetch(fro, to, amu):
+def jstr_fetch(currency_from, currency_to, amount_from):
     """fetch the json string from given input
     """
     # append url arguments step-by-step to reduce code length
     url = 'http://cs1110.cs.cornell.edu/2016fa/a1server.php'
-    url = url + '?from=' + fro
-    url = url + '&to=' + to
-    url = url + '&amt=' + str(amu)
+    url = url + '?from=' + currency_from
+    url = url + '&to=' + currency_to
+    url = url + '&amt=' + str(amount_from)
 
     # open the url and read the return string
     doc = urlopen(url)
@@ -74,18 +74,20 @@ def hasError():
     return False
 
 
-# The next three tests are rather formal; they should always pass.
+# The next three tests are merely formal; they should always pass.
 def testError():
     """test if errors are handled properly
     """
-    assert(False == hasError())
+    assert(True != hasError())
 
 
 def testfetch():
     """test if docstr is properly read
     """
     rawstr = jstr_fetch('USD', 'USD', 2.5)
-    test_jstr = b'{ "from" : "2.5 United States Dollars", "to" : "2.5 United States Dollars", "success" : true, "error" : "" }'
+    test_jstr = b'{ "from" : "2.5 United States Dollars",'
+    test_jstr = test_jstr + b' "to" : "2.5 United States Dollars",'
+    test_jstr = test_jstr + b' "success" : true, "error" : "" }'
     assert(test_jstr == rawstr)
 
 
@@ -104,8 +106,8 @@ def testprocess():
 def test_A():
     """this test concerns exchange from USD
     """
-    assert(1 == exchange('USD', 'USD', 1))              # initial test
-    assert(2.0952375 == exchange('USD', 'EUR', 2.5))    # sample test
+    assert(1 == exchange('USD', 'USD', 1))                # initial test
+    assert(2.0952375 == exchange('USD', 'EUR', 2.5))      # sample test
     assert(272.146438625 == exchange('USD', 'JPY', 2.5))
 
 
@@ -142,6 +144,26 @@ def testAll():
           + "%.3f" % clock() + " s.")
 
 
+def main():
+    print("Choose your option: 1 for running test; 2 for currency exchange.")
+    print("Input here: ", end='')
+    num = input()
+    if num == '1':
+        clock()    # start the timer
+        print("")  # add a newline for visual neatness
+        testAll()
+    elif num == '2':
+        print("Please specify your parameters:\nCurrency to exchange from:")
+        currency_from = input()
+        print("Currency to exchange to:")
+        currency_to = input()
+        print("Amount of currency to exchange from:")
+        amount_from = input()
+        amount_to = exchange(currency_from, currency_to, amount_from)
+        print("Amount of currency to exchange to:\n" + str(amount_to))
+    else:
+        main()
+
+
 if __name__ == '__main__':
-    clock()    # start the timer
-    testAll()  # start testing only if directly run
+    main()
