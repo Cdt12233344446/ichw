@@ -55,10 +55,11 @@ def wcount(lines, topn=10):
 if __name__ == '__main__':
 
     # user interface
-    if  len(sys.argv) == 1:
+    if len(sys.argv) == 1:
         print('Usage: {} url [topn]'.format(sys.argv[0]))
         print('  url: URL of the txt file to analyze ')
-        print('  topn: how many (words count) to output. If not given, will output top 10 words')
+        print('  topn: how many (words count) to output. '
+              + 'If not given, will output top 10 words')
         sys.exit(1)
 
     # handle input error
